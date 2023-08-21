@@ -1,0 +1,275 @@
+!
+version 12.2(37)SE1
+service timestamps log datetime msec
+service timestamps debug datetime msec
+service password-encryption
+!
+hostname sw-l3-3560-1
+!
+login block-for 120 attempts 2 within 60
+!
+enable secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+!
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+username andrade password 7 08701E1D290A00191308
+username senac secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+ip ssh authentication-retries 2
+ip ssh time-out 60
+no ip domain-lookup
+ip domain-name senac.intra
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ description interface de gerenciamento do switch sw-l3-3560-1
+ ip address 192.168.3.252 255.255.255.0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+!
+banner motd ^CAVISO: acesso autorizado somente a funcionarios^C
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 5 30
+ password 7 08701E1D290A00191308
+ logging synchronous
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 5 30
+ password 7 08701E1D290A00191308
+ logging synchronous
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
+
+
+sw-l3-3560-1#exit
+
+[Connection to 192.168.3.252 closed by foreign host]
+C:\>ssh -l admin 192.168.3.250
+
+Password: 
+
+AVISO: acesso autorizado somente a funcionarios
+
+banner motd 
+
+sw-l2-2960-3#copy running
+sw-l2-2960-3#copy running-config tftp:
+Address or name of remote host []? 192.168.3.1
+Destination filename [sw-l2-2960-3-confg]? 
+
+Writing running-config...!!
+[OK - 1792 bytes]
+
+1792 bytes copied in 0 secs
+sw-l2-2960-3#show runn
+sw-l2-2960-3#show running-config 
+Building configuration...
+
+Current configuration : 1792 bytes
+!
+version 15.0
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname sw-l2-2960-3
+!
+enable secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+!
+!
+!
+ip ssh version 2
+ip ssh authentication-retries 2
+ip ssh time-out 60
+no ip domain-lookup
+ip domain-name senac.intra
+!
+username admin secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+username andrade privilege 1 password 7 08701E1D290A00191308
+username senac secret 5 $1$mERr$3O.pM7PScAETpkhlqaEiE.
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ description interface de gerenciamento do switch sw-l2-2960-3
+ ip address 192.168.3.250 255.255.255.0
+!
+ip default-gateway 192.168.3.254
+!
+banner motd ^CAVISO: acesso autorizado somente a funcionarios
+
+banner motd ^C
+!
+!
+!
+line con 0
+ password 7 08701E1D290A00191308
+ logging synchronous
+ login local
+ exec-timeout 5 30
+!
+line vty 0 4
+ exec-timeout 5 30
+ password 7 08701E1D290A00191308
+ logging synchronous
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+!
+!
+end
